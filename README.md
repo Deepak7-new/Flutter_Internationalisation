@@ -9,6 +9,6 @@ To run this app :
 3. Run main.dart
 
 ##
+on locale change
 1. use text as key to find translation
-2. if translation for given key is not found then tranlate it and store it
-3. display those values in 
+2. if translation for given key is not found then tranlate it using google translator and store it
