@@ -1,19 +1,12 @@
 # test_app
 
-A new Flutter application.
+A Flutter application which uses intl_translation for translating text in app on locale change.
 
 ## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+To run this app :
+1. Download or clone this app then open your ide (with flutter configured).
+2. Run packages get in pubspec.yaml file
+3. Run main.dart
 
 ##
 1. use text as key to find translation
