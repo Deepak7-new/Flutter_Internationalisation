@@ -1,0 +1,178 @@
+import 'dart:async';
+import 'dart:core';
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:test_app/widgets/locales_list.dart';
+import '../translator.dart';
+import 'dart:ui' as ui;
+import 'package:flutter/services.dart';
+
+class TextLocalizations {
+  TextLocalizations(this.locale);
+
+  final Locale locale;
+  final translator = GoogleTranslator();
+  Map<String, Map<String, String>> jsonMap;
+  String jsonString;
+
+  static TextLocalizations of(BuildContext context) {
+    return Localizations.of<TextLocalizations>(context, TextLocalizations);
+  }
+
+  /*Widget convertText(String text) {
+    return FutureBuilder<String>(
+        future: translator.translate(text, to: locale.languageCode),
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return Text("");
+            case ConnectionState.active:
+            case ConnectionState.waiting:
+              return Text("Loading..");
+            case ConnectionState.done:
+              if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+              return Text(snapshot.data);
+          }
+          return Text("");
+        });
+  }*/
+
+  Future<String> convertText(String text) async {
+    int conversionStatus = await isTranslated(text);
+    print(conversionStatus);
+    if (conversionStatus == 2) {
+      if (locale.languageCode == "en") {
+        return text;
+      }
+      else{
+
+        return jsonMap[text][locale.languageCode];
+      }
+    } else if (conversionStatus == 0) {
+      translator
+          .translate(text, to: locale.languageCode)
+          .then((translatedText) {
+        writeToJsonFile(text, translatedText);
+        return translatedText;
+      });
+    } else {
+      translator
+          .translate(text, to: locale.languageCode)
+          .then((translatedText) {
+        appendToJsonFile(translatedText);
+        return translatedText;
+      });
+    }
+    return null;
+  }
+
+  void writeToJsonFile(String originalText, String translatedText) async {
+    print("Writing to file!");
+    Map<String, Map<String, String>> content = {
+      originalText: {locale.languageCode: translatedText}
+    };
+
+    Map<String, Map<String, String>> jsonFileContent = json.decode(jsonString);
+    jsonFileContent.addAll(content);
+    // jsonFile.writeAsStringSync(JSON.encode(jsonFileContent));
+  }
+
+  void appendToJsonFile(String translatedText) {}
+
+  Future<int> isTranslated(String text) async {
+    jsonString =
+        await rootBundle.loadString('json_package/converted_text.json');
+    Map<String, dynamic> jsonDynamicMap = json.decode(jsonString);
+    jsonMap = jsonDynamicMap.map((key, value) {
+      return MapEntry(key, jsonDynamicMap.map((key, value) {
+        return MapEntry(key, value.toString());
+      }));
+    });
+
+    if (jsonMap.containsKey(text)) {
+      Map<String, String> translatedLanguages = jsonMap[text];
+      print(jsonMap["Hello world"]);
+      if (translatedLanguages.containsKey(locale.languageCode) ||
+          locale.languageCode == "en") {
+        return 2;
+      } else {
+        return 1;
+      }
+    } else {
+      return 0;
+    }
+  }
+}
+
+class DemoLocalizationsDelegate
+    extends LocalizationsDelegate<TextLocalizations> {
+  const DemoLocalizationsDelegate();
+
+  @override
+  bool isSupported(Locale locale) => localesList.contains(locale.languageCode);
+
+  @override
+  Future<TextLocalizations> load(Locale locale) async {
+    return TextLocalizations(locale);
+  }
+
+  @override
+  bool shouldReload(DemoLocalizationsDelegate old) => false;
+}
+
+// Widget for Text translation
+class Trans extends StatelessWidget {
+  final String data;
+
+  const Trans(
+    this.data, {
+    Key key,
+  }) : assert(
+          data != null,
+          'A non-null String must be provided to a Trans widget.',
+        );
+
+  @override
+  Widget build(BuildContext context) {
+    //return TextLocalizations.of(context).convertText(data);
+    return FutureBuilder<String>(
+        future: TextLocalizations.of(context).convertText(data),
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return Text("");
+            case ConnectionState.active:
+            case ConnectionState.waiting:
+              return Text("Loading..");
+            case ConnectionState.done:
+              if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+              return Text(snapshot.data);
+          }
+          return Text("");
+        });
+  }
+}
+
+//Widget for Date translation
+class TransDate extends StatelessWidget {
+  final DateTime date;
+  TransDate(this.date);
+  @override
+  Widget build(BuildContext context) {
+    DateFormat dateFormat =
+        new DateFormat.yMMMMd(ui.window.locale.languageCode);
+    return Text(dateFormat.format(date));
+  }
+}
+
+//Widget for Time translation
+class TransTime extends StatelessWidget {
+  final DateTime time;
+  TransTime(this.time);
+  @override
+  Widget build(BuildContext context) {
+    DateFormat timeFormat = new DateFormat.Hms(ui.window.locale.languageCode);
+    return Text(timeFormat.format(time));
+  }
+}
