@@ -18,6 +18,12 @@ On locale change:
 
 ##
 Screenshots of app :-
+1. Localisation :-
+<p float="left">
+<img src="https://github.com/Deepak7-new/Flutter_Internationalisation/blob/master/screenshot/Screenshot_1585448200.png" width="230" height="400">
+<img src="https://github.com/Deepak7-new/Flutter_Internationalisation/blob/master/screenshot/Screenshot_1585448996.png" width="230" height="400">
+</p>
+
 <p float="left">
 <img src="https://github.com/Deepak7-new/Flutter_Internationalisation/blob/master/screenshot/Screenshot_1585448200.png" width="230" height="400">
 <img src="https://github.com/Deepak7-new/Flutter_Internationalisation/blob/master/screenshot/Screenshot_1585448208.png" width="230" height="400">
