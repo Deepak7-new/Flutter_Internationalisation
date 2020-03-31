@@ -18,4 +18,4 @@ On locale change:
 
 ##
 Screenshots of app :-
-![Screenshot](https://github.com/Deepak7-new/Flutter_Internationalisation/blob/master/screenshot/Screenshot_1585448200.png)
+
