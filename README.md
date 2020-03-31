@@ -19,5 +19,5 @@ On locale change:
 ##
 Screenshots of app :-
 
-<img src="https://github.com/Deepak7-new/Flutter_Internationalisation/blob/master/screenshot/Screenshot_1585448200.png" width="100" height="100">
+<img src="https://github.com/Deepak7-new/Flutter_Internationalisation/blob/master/screenshot/Screenshot_1585448200.png" width="500" height="700">
 
