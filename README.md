@@ -15,3 +15,7 @@ On locale change:
 2. If translation for given key is not found then tranlate it using google translator and notify it to the developer by logging it to the console.
 3. Currently I have given translation for only three languages i.e. English, Hindi and French.
 4. However one can give translation for any other language by going to "converted_text.dart" class.
+
+##
+Screenshots of app :-
+![Screenshot](https://github.com/Deepak7-new/Flutter_Internationalisation/blob/master/screenshot/Screenshot_1585448200.png)
