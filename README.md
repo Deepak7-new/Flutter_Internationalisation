@@ -9,6 +9,8 @@ To run this app :
 3. Run main.dart
 
 ##
-on locale change
-1. use text as key to find translation
-2. if translation for given key is not found then tranlate it using google translator and store it
+On locale change:
+1. Uses text as key to find translation
+2. If translation for given key is not found then tranlate it using google translator and notify it to the developer by logging it to the console.
+3. Currently I have given translation for only three languages i.e. English, Hindi and French.
+4. However one can give translation for any other language by going to "converted_text.dart" class.
