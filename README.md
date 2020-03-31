@@ -1,6 +1,7 @@
 # test_app
 
 A Flutter application which uses intl_translation for translating text in app on locale change.
+I have created widget "Trans", which translates the test given to it on locale change and also gives support for plural and gender.
 
 ## Getting Started
 To run this app :
